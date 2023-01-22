@@ -1,10 +1,16 @@
 import React, { useCallback } from "react";
-import { useCoffeeQuery } from "./hooks/services/queries/useCoffeeQuery";
-import { useUpdateCoffeeMutate } from "./hooks/services/mutations/useCoffeeMutate";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+import {
+  useCoffeeQuery,
+  useUpdateCoffeeMutate,
+} from "./../hooks/services/queries/useCoffeeQuery";
+
+function Coffee() {
+  const navigate = useNavigate();
   const { isLoading, data, isError, error } = useCoffeeQuery({
     type: "hot",
+    select: (data) => data.data,
     onSuccess: (data) => {
       console.log({ data });
     },
@@ -26,6 +32,10 @@ function App() {
     });
   }, []);
 
+  const handleMoveToWine = useCallback(() => {
+    navigate("/wine");
+  }, []);
+
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
@@ -36,11 +46,15 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={handleClickUpdate}>UPDATE</button>
+      <div>
+        <button onClick={handleClickUpdate}>UPDATE</button>
+      </div>
+      <div>
+        <button onClick={handleMoveToWine}>Move To Wine</button>
+      </div>
       <div>
         {data &&
-          data.data &&
-          data.data.map(({ id, title, description, image }) => {
+          data.map(({ id, title, description, image }) => {
             return (
               <li key={id}>
                 <h2>{title}</h2>
@@ -54,4 +68,4 @@ function App() {
   );
 }
 
-export default App;
+export default Coffee;
