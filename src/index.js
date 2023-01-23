@@ -5,7 +5,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Coffee from "./components/Coffee";
 import Wine from "./components/Wine";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      //staleTime: 1000 * 50,
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {

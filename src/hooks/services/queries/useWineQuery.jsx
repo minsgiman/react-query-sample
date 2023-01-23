@@ -6,8 +6,6 @@ export const useWineQuery = ({ onSuccess, onError, select }) => {
   return useQuery({
     queryKey: wineKeys.reds,
     queryFn: () => fetchWine(),
-    cacheTime: 600 * 1000,
-    staleTime: 300 * 1000,
     onSuccess,
     onError,
     select

@@ -28,7 +28,7 @@ function Coffee() {
   const handleClickUpdate = useCallback(() => {
     updateCoffee({
       type: "hot",
-      coffee: [{ title: "test", description: "123" }],
+      coffee: [{ id: 100, title: "test", description: "123" }],
     });
   }, []);
 
