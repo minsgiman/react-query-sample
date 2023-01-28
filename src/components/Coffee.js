@@ -10,7 +10,7 @@ function Coffee() {
   const navigate = useNavigate();
   const { isLoading, data, isError, error } = useCoffeeQuery({
     type: "hot",
-    select: (data) => data.data,
+    select: (data) => (data ? data : []),
     onSuccess: (data) => {
       console.log({ data });
     },
@@ -53,16 +53,15 @@ function Coffee() {
         <button onClick={handleMoveToWine}>Move To Wine</button>
       </div>
       <div>
-        {data &&
-          data.map(({ id, title, description, image }) => {
-            return (
-              <li key={id}>
-                <h2>{title}</h2>
-                <img src={image} width="100" />
-                <p>{description}</p>
-              </li>
-            );
-          })}
+        {data.map(({ id, title, description, image }) => {
+          return (
+            <li key={id}>
+              <h2>{title}</h2>
+              <img src={image} width="100" />
+              <p>{description}</p>
+            </li>
+          );
+        })}
       </div>
     </div>
   );

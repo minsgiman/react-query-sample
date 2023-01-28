@@ -1,19 +1,22 @@
 import axios from "axios";
+import { Coffees } from "./coffeeSchema";
 
-export const fetchCoffee = (type) => {
-  return axios.get(`https://api.sampleapis.com/coffee/${type}`);
+export const fetchCoffee = async (type) => {
+  const { data } = await axios.get(`https://api.sampleapis.com/coffee/${type}`);
+
+  return Coffees.parse(data);
 };
 
 export const addCoffee = async ({ type, coffee }) => {
   try {
-    const result = await axios.post(
+    const { data } = await axios.post(
       `https://api.sampleapis.com/coffee/${type}`,
       coffee
     );
-    if (result.data.error) {
-      throw new Error(result.data.error);
+    if (data.error) {
+      throw new Error(data.error);
     }
-    return Promise.resolve(result);
+    return Coffees.parse(data);
   } catch (e) {
     return Promise.reject(e);
   }
